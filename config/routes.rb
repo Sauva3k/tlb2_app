@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  get 'users/new'
 
   root 'home_page#home'
   get 'home_page/home'
+  get 'users/new'
   get '/signup', to: 'users#new'
   resources :users
 
