@@ -10,6 +10,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+	  # Allow newly created users to login immediately after sign-up
+	  log_in @user
 	  # Flash: Temporary message to new user
 	  flash[:success] = "Welcome to Tech-Life Balance!"
       redirect_to @user
