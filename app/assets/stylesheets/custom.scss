@@ -113,7 +113,8 @@ footer {
   @include box_sizing;
 }
 
-/* forms https://www.railstutorial.org/book/sign_up*/
+/* forms https://www.railstutorial.org/book/sign_up;
+ https://www.railstutorial.org/book/advanced_login*/
 
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
@@ -139,4 +140,18 @@ input {
   .form-control {
     color: $state-danger-text;
   }
+}
+
+.checkbox {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  span {
+    margin-left: 20px;
+    font-weight: normal;
+  }
+}
+
+#session_remember_me {
+  width: auto;
+  margin-left: 0;
 }
