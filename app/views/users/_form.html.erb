@@ -12,6 +12,11 @@
 
   <%= f.label :password_confirmation, "Confirm Password" %>
   <%= f.password_field :password_confirmation, class: 'form-control' %>
-
+  
+  <%= f.label :admin do %>
+        <%= f.check_box :admin %>
+	    <span>Admin?</span>
+  <% end %>
+  
   <%= f.submit "Submit", class: "btn btn-primary" %>
 <% end %>
