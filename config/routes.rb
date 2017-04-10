@@ -1,18 +1,18 @@
 Rails.application.routes.draw do
 
   resources :todo_lists
-  get 'sessions/new'
+  #get 'sessions/new'
   get 'home_page/home' #will need to check how to replace
   get 'users/new'
   
   root 'home_page#home'
   
+  #Rename user route
   get '/signup',     to: 'users#new'
   post '/signup',    to: 'users#create'
   
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
-  
   delete '/logout',  to: 'sessions#destroy'
   
   resources :users
