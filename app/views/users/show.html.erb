@@ -1,11 +1,23 @@
 <% provide(:title, @user.name) %>
-<h1>
-  <%= @user.name %>
-</h1>
 
-<p>
-  <%= @user.email %>
-</p>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        <%= @user.name %>
+      </h1>
+    </section>
+  </aside>
+  <div class="col-md-8">
+    <% if @user.task_items.any? %>
+      <h3>Task Items (<%= @user.task_items.count %>)</h3>
+      <ol class="task_item">
+        <%= render @task_items %>
+      </ol>
+      <%= will_paginate @task_items %>
+    <% end %>
+  </div>
+</div>
 
 <p>
   <%= link_to "Assigned tasks", todo_lists_path %>

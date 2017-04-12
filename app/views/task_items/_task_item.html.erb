@@ -1,0 +1,8 @@
+<li id="task_item"<%= task_item.id %>">
+  <span class="user"><%= link_to task_item.user.name, task_item.user %></span>
+  <span class="description"><%= task_item.description %></span>
+  <span class="points"><%= task_item.points %></span>
+  <span class="timestamp">
+    Date Added: <%= task_item.created_at %> .
+  </span>
+</li>
