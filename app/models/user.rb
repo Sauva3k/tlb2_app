@@ -1,5 +1,9 @@
 class User < ApplicationRecord
   has_many :task_items, dependent: :destroy
+  has_many :active_connections, class_name:  "Connection",
+                                foreign_key: "user_id",
+								dependent:   :destroy
+  has_many :wifis, through: :active_connections
   attr_accessor :remember_token, :activation_token
   before_save   :downcase_email
   before_create :create_activation_digest
@@ -41,7 +45,6 @@ class User < ApplicationRecord
   end
   
   # Defines a proto-feed.
-  # See "Following users" for the full implementation.
   def feed
     TaskItem.where("user_id = ?", id)
   end

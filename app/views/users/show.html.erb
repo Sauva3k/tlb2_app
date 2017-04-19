@@ -1,21 +1,27 @@
 <% provide(:title, @user.name) %>
 
+<% if current_user.admin? %>
 <div class="row">
   <aside class="col-md-4">
-    <section class="user_info">
-      <h1>
-        <%= @user.name %>
-      </h1>
-    </section>
+     <section class="user_info">
+        <%= render 'shared/user_info' %>
+      </section>
+	  <section>
+		<ul>
+		  <li><%= link_to "Add new user", signup_path %></li>
+		  <li><%= link_to "View all users", users_path %></li>
+		</ul>
+	  </section>
+	  <section class="task_item_form">
+        <%= render 'shared/micropost_form' %>
+      </section>
   </aside>
+
+<% end %>
+
   <div class="col-md-8">
-    <% if @user.task_items.any? %>
-      <h3>Task Items (<%= @user.task_items.count %>)</h3>
-      <ol class="task_item">
-        <%= render @task_items %>
-      </ol>
-      <%= will_paginate @task_items %>
-    <% end %>
+      <h3>Task List for <%= @user.name %></h3>
+      <%= render 'shared/feed' %>
   </div>
 </div>
 

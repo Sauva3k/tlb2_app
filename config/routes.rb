@@ -15,9 +15,19 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
   
-  resources :users
-  resources :account_activations, only: [:edit]
   resources :task_items
+  resources :users do
+    resources :task_items,        only: [:create, :destroy]
+	member do
+	  get :wifis
+	end 
+  end
+  resources :wifis do
+    member do
+      get :users	
+	end
+  end 
+  resources :account_activations, only: [:edit]
   resources :todo_lists do
     resources :todo_items do
 	  member do

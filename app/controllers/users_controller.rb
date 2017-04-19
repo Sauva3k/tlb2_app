@@ -10,7 +10,8 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @task_item = @user.task_items
+	@task_item = @user.task_items.build 
+	@feed_items = @user.feed
   end
 
   def new
@@ -35,6 +36,7 @@ class UsersController < ApplicationController
   end
   
   def update
+    #Note: need to handle non-admin user updating profile to 'Admin' - should only be done by Admin
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       # Handle a successful update.
@@ -55,7 +57,7 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation)
+                                   :password_confirmation, :admin)
     end
 	
 	# Before filters
@@ -66,8 +68,4 @@ class UsersController < ApplicationController
       redirect_to(root_url) unless current_user?(@user)
     end
 	
-	# Confirms an admin user.
-    def admin_user
-      redirect_to(root_url) unless current_user.admin?
-    end
 end

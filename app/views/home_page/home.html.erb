@@ -4,14 +4,21 @@
       <section class="user_info">
         <%= render 'shared/user_info' %>
       </section>
-      <section class="task_item_form">
-        <%= render 'shared/micropost_form' %>
-      </section>
+	  <% if current_user.admin? %>
+	  <section>
+	  <ul>
+	  <li><%= link_to "Add new user", signup_path %></li>
+	  <li><%= link_to "View all users", users_path %></li>
+	  </ul>
+	  </section>
+	  <% end %>
     </aside>
+	<% if !current_user.admin? %>
 	<div class="col-md-8">
       <h3>Task List</h3>
       <%= render 'shared/feed' %>
     </div>
+	<% end %>
   </div>
 <% else %>
   <div class="center jumbotron">

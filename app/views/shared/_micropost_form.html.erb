@@ -1,12 +1,18 @@
-<%= form_for(@task_item) do |f| %>
+<%= form_for([@user, @task_item]) do |f| %>
+  <%= 
+    f.hidden_field :id, value: @task_item.user.id 
+  %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="field">
-  
+
     <%= f.label :description %>
-    <%= f.text_area :description, placeholder: "Add new task" %>
+    <%= f.text_field :description, placeholder: "Add new task"%>
 	
 	<%= f.label :points %>
-	<%= f.text_field :points %>
+	<%= f.text_field :points, placeholder: "Add points"%>
+	
+	<%= f.label :approval_required %><br>
+    <%= f.check_box :approval_required%>
 	
   </div>
   

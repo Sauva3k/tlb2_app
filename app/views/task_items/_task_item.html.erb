@@ -1,12 +1,12 @@
 <li id="task_item"<%= task_item.id %>">
-  <span class="user"><%= link_to task_item.user.name, task_item.user %></span>
-  <span class="description"><%= task_item.description %></span>
-  <span class="points"><%= task_item.points %></span>
-  <span class="timestamp">
-    Date Added: <%= task_item.created_at %> .
-	<% if current_user?(task_item.user) %>
-      <%= link_to "delete", task_item, method: :delete,
-                                       data: { confirm: "You sure?" } %>
-    <% end %>
-  </span>
+<span class="description"><%= task_item.description %></span>
+<span class="points"><%= task_item.points %></span>
+<span class="approval_required"><%= task_item.approval_required %></span>
+<span class="timestamp">
+  Date Added: <%= task_item.created_at %> .
+  <% if current_user.admin? %>
+	<%= link_to "delete", task_item, method: :delete,
+								   data: { confirm: "Are you sure?" } %>
+  <% end %>
+</span>
 </li>
