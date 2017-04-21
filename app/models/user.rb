@@ -1,9 +1,15 @@
 class User < ApplicationRecord
   has_many :task_items, dependent: :destroy
+  
+  # http://guides.rubyonrails.org/association_basics.html:
   has_many :active_connections, class_name:  "Connection",
                                 foreign_key: "user_id",
 								dependent:   :destroy
   has_many :wifis, through: :active_connections
+  #Allow /users/_form.html.erb to also access Wifi model
+  #see http://theartandscienceofruby.com/2015/08/20/multiple-models-in-a-single-form/  
+  accepts_nested_attributes_for :wifis 
+  
   attr_accessor :remember_token, :activation_token
   before_save   :downcase_email
   before_create :create_activation_digest
@@ -48,7 +54,7 @@ class User < ApplicationRecord
   def feed
     TaskItem.where("user_id = ?", id)
   end
-  
+    
   private
 
     # Converts email to all lower-case.

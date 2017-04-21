@@ -1,5 +1,10 @@
-<%= form_for(user) do |f| %>
+<%= form_for([user]) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
+  
+  <%= f.fields_for :wifi do |w| %>
+    <%= w.label :key, "Wifi Key" %>
+    <%= w.text_field :key, class: 'form-control'%>
+  <% end %>
   
   <%= f.label :name %>
   <%= f.text_field :name, class: 'form-control' %>

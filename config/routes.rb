@@ -17,10 +17,10 @@ Rails.application.routes.draw do
   
   resources :task_items
   resources :users do
-    resources :task_items,        only: [:create, :destroy]
 	member do
 	  get :wifis
 	end 
+	resources :task_items,        only: [:create, :destroy]
   end
   resources :wifis do
     member do
@@ -35,6 +35,7 @@ Rails.application.routes.draw do
 	  end
     end
   end
+  resources :connections,         only: [:create, :destroy]
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

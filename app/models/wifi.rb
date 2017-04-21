@@ -1,21 +1,9 @@
 class Wifi < ApplicationRecord
+  # http://guides.rubyonrails.org/association_basics.html
   has_many :active_connections, class_name:  "Connection",
-                                foreign_key: "wifi_id",
+                                foreign_key: "user_id",
 								dependent:   :destroy
-  has_many :users, through: :active_relationships
+  has_many :users, through: :active_connections
+  validates :key, presence: true
   
-  # Add a user.
-  def add(user)
-    added << user
-  end
-
-  # Unfollows a user.
-  def remove(user)
-    added.delete(user)
-  end
-
-  # Returns true if the current user is following the other user.
-  def added(user)
-    added.include?(user)
-  end
 end

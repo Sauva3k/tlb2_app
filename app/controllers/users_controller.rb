@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
   
+  
   def index
     @users = User.all
   end
@@ -19,8 +20,10 @@ class UsersController < ApplicationController
   end
   
   def create
+    # Create new user
     @user = User.new(user_params)
-    if @user.save
+	# Save user to Users table and create entry in Connections table
+    if @user.save && @user.wifis << Wifi.find(1)
 	  # Allow newly created users to login immediately after sign-up
 	  log_in @user
 	  # Flash: Temporary message to new user
@@ -68,4 +71,7 @@ class UsersController < ApplicationController
       redirect_to(root_url) unless current_user?(@user)
     end
 	
+	def wifi_params
+      params.require(:wifi).permit(:key)
+    end	
 end
