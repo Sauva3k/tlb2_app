@@ -4,6 +4,7 @@ class Wifi < ApplicationRecord
                                 foreign_key: "user_id",
 								dependent:   :destroy
   has_many :users, through: :active_connections
+  #belongs_to :user 
   validates :key, presence: true
   
 end

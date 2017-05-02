@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170417091124) do
+ActiveRecord::Schema.define(version: 20170421150646) do
 
   create_table "connections", force: :cascade do |t|
     t.integer  "wifi_id"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20170417091124) do
     t.string   "activation_digest"
     t.boolean  "activated",         default: false
     t.datetime "activated_at"
+    t.string   "username"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

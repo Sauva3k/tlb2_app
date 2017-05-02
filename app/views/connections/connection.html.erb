@@ -1,0 +1,18 @@
+<% provide(:title, 'Sign up') %>
+<h1>Create Account</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <% if !params.has_key?(:key) %>
+	  
+	  <%= form_for(:wifi) do |f| %>
+	    <%= f.label :key, "Wifi Key" %>
+        <%= f.text_field :key, class: 'form-control'%>
+	    <%= f.submit "Activate Wifi", class: "btn btn-primary" %>
+	  <% end %>
+	  
+	<% else %>
+      <%= render partial: 'user/form', locals: {user: @user, wifi: @wifi} %>
+	<% end %>
+  </div>
+</div>

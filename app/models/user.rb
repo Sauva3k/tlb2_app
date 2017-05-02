@@ -8,12 +8,20 @@ class User < ApplicationRecord
   has_many :wifis, through: :active_connections
   #Allow /users/_form.html.erb to also access Wifi model
   #see http://theartandscienceofruby.com/2015/08/20/multiple-models-in-a-single-form/  
-  accepts_nested_attributes_for :wifis 
+  accepts_nested_attributes_for :wifis
   
   attr_accessor :remember_token, :activation_token
   before_save   :downcase_email
+  before_save   :downcase_username
   before_create :create_activation_digest
   validates :name,  presence: true, length: { maximum: 50 }
+  #Don't allow @ in username
+  #https://github.com/plataformatec/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address
+  VALID_USERNAME_REGEX = /\A[a-zA-Z0-9]*\z/
+  validates :username,  presence: true, length: { maximum: 50 },
+                        format: { with: VALID_USERNAME_REGEX, message: "may only contain letters and numbers." },
+                        uniqueness: { case_sensitive: false }
+  #validate :validate_username - not working
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
@@ -61,10 +69,22 @@ class User < ApplicationRecord
     def downcase_email
       self.email = email.downcase
     end
+	
+	def downcase_username
+	  self.username = username.downcase 
+	end
 
     # Creates and assigns the activation token and digest.
     def create_activation_digest
       self.activation_token  = User.new_token
       self.activation_digest = User.digest(activation_token)
+    end
+	
+	#Ensures user does not use email address for username
+	#https://github.com/plataformatec/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address
+	def validate_username
+      if User.where(email: username).exists?
+        errors.add(:username, :invalid)
+      end
     end
 end

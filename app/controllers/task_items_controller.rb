@@ -7,7 +7,6 @@ class TaskItemsController < ApplicationController
   def create
     @user = User.find(params[:user_id])
     @task_item = @user.task_items.build(task_item_params)
-	#@task_item = current_user.task_items.build(task_item_params)
     if @task_item.save
       flash[:success] = "Task Added!"
       redirect_to @user

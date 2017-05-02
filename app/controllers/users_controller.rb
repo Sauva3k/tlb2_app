@@ -16,22 +16,26 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new 
+    @user = User.new
+    #@wifi = Wifi.find(params[:id])
   end
   
   def create
+    #See http://stackoverflow.com/questions/7266952/creating-many-to-many-relationships-on-a-nested-rails-form
     # Create new user
     @user = User.new(user_params)
 	# Save user to Users table and create entry in Connections table
-    if @user.save && @user.wifis << Wifi.find(1)
-	  # Allow newly created users to login immediately after sign-up
-	  log_in @user
-	  # Flash: Temporary message to new user
-	  flash[:success] = "Welcome to Tech-Life Balance!"
-      redirect_to @user
-    else
-      render 'new'
-    end
+	  #if @user.wifis << Wifi.find_by(key: params[:key]) && @user.save - NOT WORKING
+	  #if @user.wifis << Wifi.find_by(key: "123abc") && @user.save - NOT WORKING
+	  if @user.save
+		# Allow newly created users to login immediately after sign-up
+	    log_in @user
+	    # Flash: Temporary message to new user
+	    flash[:success] = "Welcome to Tech-Life Balance!"
+        redirect_to @user
+      else
+        render 'new'
+      end
   end
   
   def edit
@@ -58,12 +62,16 @@ class UsersController < ApplicationController
   
   private
 
-    def user_params
-      params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation, :admin)
-    end
-	
-	# Before filters
+    def user_params  
+	  #if current_user.admin?
+        #params.require(:user).permit(:name, :email, :password,
+                                   #:password_confirmation, :admin, 
+								   #:username)
+      #else
+        params.require(:user).permit(:name, :email, :password,
+                                   :password_confirmation, :username)
+      #end
+    end	
 
     # Confirms the correct user.
     def correct_user
@@ -71,7 +79,8 @@ class UsersController < ApplicationController
       redirect_to(root_url) unless current_user?(@user)
     end
 	
-	def wifi_params
-      params.require(:wifi).permit(:key)
-    end	
+	# Confirms an admin user.
+    def admin_user
+      redirect_to(root_url) unless current_user.admin?
+    end
 end
