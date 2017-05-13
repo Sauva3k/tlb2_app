@@ -1,4 +1,7 @@
 class TodoItemsController < ApplicationController
+  
+  #Not implemented in site - need to delete
+  
   before_action :set_todo_list
   before_action :set_todo_item, except: [:create]
   

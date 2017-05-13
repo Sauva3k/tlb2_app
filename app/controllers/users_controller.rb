@@ -25,8 +25,6 @@ class UsersController < ApplicationController
     # Create new user
     @user = User.new(user_params)
 	# Save user to Users table and create entry in Connections table
-	  #if @user.wifis << Wifi.find_by(key: params[:key]) && @user.save - NOT WORKING
-	  #if @user.wifis << Wifi.find_by(key: "123abc") && @user.save - NOT WORKING
 	  if @user.save
 		# Allow newly created users to login immediately after sign-up
 	    log_in @user
@@ -63,14 +61,8 @@ class UsersController < ApplicationController
   private
 
     def user_params  
-	  #if current_user.admin?
-        #params.require(:user).permit(:name, :email, :password,
-                                   #:password_confirmation, :admin, 
-								   #:username)
-      #else
-        params.require(:user).permit(:name, :email, :password,
+	   params.require(:user).permit(:name, :email, :password,
                                    :password_confirmation, :username)
-      #end
     end	
 
     # Confirms the correct user.

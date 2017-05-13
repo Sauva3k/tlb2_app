@@ -12,7 +12,6 @@ class SessionsController < ApplicationController
 	  params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       redirect_back_or user
     else
-	  # flash.now - Only display error message on the rendered page.
       flash.now[:danger] = 'Invalid username/password combination' 
       render 'new'
     end

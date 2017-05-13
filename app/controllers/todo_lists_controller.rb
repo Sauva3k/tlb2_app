@@ -1,4 +1,7 @@
 class TodoListsController < ApplicationController
+  
+  #Note implemented in site - need to delete
+  
   before_action :set_todo_list, only: [:show, :edit, :update, :destroy]
 
   # GET /todo_lists
